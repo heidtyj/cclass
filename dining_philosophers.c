@@ -12,7 +12,7 @@
  #include <pthread.h>
  #include <unistd.h>
  #include <time.h>
- #include <stdarg.h>
+ #include <stdarg.h>₩
  
  #define N_PHIL 5
  #define MAX_MEALS 3

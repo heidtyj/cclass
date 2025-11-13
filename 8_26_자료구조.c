@@ -1,3 +1,4 @@
+/*
 #include<stdio.h>
 #include<string.h>
 #define MAX 101
@@ -132,4 +133,16 @@ int main() {
         printf("\n");
     }
     return 0;
+}
+
+*/
+
+
+
+
+
+
+#include <stdio.h>
+int main(){
+    printf("Hello World.");
 }
