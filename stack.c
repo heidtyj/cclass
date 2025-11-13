@@ -504,29 +504,24 @@ int main(void)
     
     typedef char element;
     
-    typedef struct
-    {
+    typedef struct{
         element data[MAX_STACK_SIZE];
         int top;
     } StackType;
     
-    void init_stack(StackType *s)
-    {
+    void init_stack(StackType *s){
         s->top = -1;
     }
     
-    int is_empty(StackType *s)
-    {
+    int is_empty(StackType *s){
         return (s->top == -1);
     }
     
-    int is_full(StackType *s)
-    {
+    int is_full(StackType *s){
         return (s->top == MAX_STACK_SIZE - 1);
     }
     
-    void push(StackType *s, element item)
-    {
+    void push(StackType *s, element item){
         if (is_full(s))
         {
             fprintf(stderr, "스택 포화 에러\n");
@@ -535,8 +530,7 @@ int main(void)
         s->data[++(s->top)] = item;
     }
     
-    element pop(StackType *s)
-    {
+    element pop(StackType *s){
         if (is_empty(s))
         {
             fprintf(stderr, "스택 공백 에러\n");
@@ -545,8 +539,7 @@ int main(void)
         return s->data[(s->top)--];
     }
     
-    element peek(StackType *s)
-    {
+    element peek(StackType *s){
         if (is_empty(s))
         {
             fprintf(stderr, "스택 공백 에러\n");
@@ -555,8 +548,7 @@ int main(void)
         return s->data[s->top];
     }
     
-    int prec(char op)
-    {
+    int prec(char op){
         switch (op)
         {
         case '(':
@@ -571,56 +563,42 @@ int main(void)
         return -1;
     }
     
-    void infix_to_postfix(char exp[])
-    {
+    void infix_to_postfix(char exp[]){
         StackType s;
-        init_stack(&s);
-    
+        init_stack(&s);    
         int len = strlen(exp);
-    
-        for (int i = 0; i < len; i++)
-        {
+        for (int i = 0; i < len; i++){
             char ch = exp[i];
-    
             // 피연산자 (숫자 또는 알파벳)
-            if ((ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z'))
-            {
+            if ((ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z')){
                 printf("%c", ch);
             }
             // 연산자
-            else if (ch == '+' || ch == '-' || ch == '*' || ch == '/')
-            {
+            else if (ch == '+' || ch == '-' || ch == '*' || ch == '/'){
                 while (!is_empty(&s) && prec(ch) <= prec(peek(&s)))
                     printf("%c", pop(&s));
                 push(&s, ch);
             }
-            else if (ch == '(')
-            {
+            else if (ch == '('){
                 push(&s, ch);
             }
-            else if (ch == ')')
-            {
+            else if (ch == ')'){
                 char top_op = pop(&s);
-                while (top_op != '(')
-                {
+                while (top_op != '('){
                     printf("%c", top_op);
                     top_op = pop(&s);
                 }
             }
         }
-    
         while (!is_empty(&s))
-            printf("%c", pop(&s));
+        printf("%c", pop(&s));
     }
     
-    int main(void)
-    {
+    int main(void){
         char s[] = "(2+3)*4+9";
-    
         printf("중위 표기식: %s\n", s);
         printf("후위 표기식: ");
         infix_to_postfix(s);
         printf("\n");
-    
         return 0;
     }
